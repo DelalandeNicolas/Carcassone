@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Evaluation {
 	private Tuile t;
 	private Plateau p;
-	private int position; // Dans l'Evaluation c'est la position sur t de la caractéristique qui nous intéresse.
+	private int position; // Dans l'Evaluation c'est la position sur t de la caractï¿½ristique qui nous intï¿½resse.
 	
 	public Evaluation (Tuile t, Plateau p, int pos){
 		this.t=t;
@@ -23,8 +23,8 @@ public class Evaluation {
 	
 	//***************BLOC ABBAYE**************************
 	public ArrayList<Evaluation> verifPresenceAbbaye() {
-		// A utiliser sur une tuile qui vient d'être posée pour avoir la liste de toutes les abbayes qui pourraient devenir complètes grâce à cette tuile.
-		// Action : Renvoie la liste des tuiles adjacentes contenant une abbaye, y compris elle-même si c'est le cas.
+		// A utiliser sur une tuile qui vient d'ï¿½tre posï¿½e pour avoir la liste de toutes les abbayes qui pourraient devenir complï¿½tes grï¿½ce ï¿½ cette tuile.
+		// Action : Renvoie la liste des tuiles adjacentes contenant une abbaye, y compris elle-mï¿½me si c'est le cas.
 		ArrayList<Evaluation> TuileAbbaye = new ArrayList<Evaluation>();
 		int x= t.getX(); // Pour simplifier la lecture de la suite.
 		int y= t.getY();
@@ -46,24 +46,24 @@ public class Evaluation {
 	}
 	
 	public void evalAbbaye(){
-		// pré-requis : tuile avec un pion sur une abbaye, en cours de partie
-		// action : ajoute 9 et retire le pion si l'abaye est compléte, 0 sinon 
+		// prï¿½-requis : tuile avec un pion sur une abbaye, en cours de partie
+		// action : ajoute 9 et retire le pion si l'abaye est complï¿½te, 0 sinon 
 		int x= t.getX(); // Pour simplifier la lecture de la suite.
 		int y= t.getY();
-		if(this.t.getPionPlacé()!=null){
+		if(this.t.getPionPlace()!=null){
 			if ( !p.isEmpty(x-1,y+1) && !p.isEmpty(x,y+1) && !p.isEmpty(x+1,y+1) && !p.isEmpty(x+1,y) && !p.isEmpty(x+1,y-1) && !p.isEmpty(x,y-1) && !p.isEmpty(x-1,y-1) && !p.isEmpty(x-1,y)){
-				this.t.getPionPlacé().getProprio().ajoutPoints(9);
-				this.t.getPionPlacé().liberePion();
+				this.t.getPionPlace().getProprio().ajoutPoints(9);
+				this.t.getPionPlace().liberePion();
 			}
 		}
 	}
 	
 	public void evalAbbayeFinPartie(){
-		// pré-requis : tuile avec un pion sur une abbaye, en fin de partie
+		// prï¿½-requis : tuile avec un pion sur une abbaye, en fin de partie
 		// action : retourne la valeur d'une abbaye en fin de partie, et retire le pion.
 		int x= t.getX(); // Pour simplifier la lecture de la suite.
 		int y= t.getY();
-		if(this.t.getPionPlacé()!=null){
+		if(this.t.getPionPlace()!=null){
 			int res=1; 
 			if ( !p.isEmpty(x-1,y+1) ){ res++;}
 			if ( !p.isEmpty(x,y+1) ){ res++;}
@@ -75,8 +75,8 @@ public class Evaluation {
 			if ( !p.isEmpty(x-1,y-1) ){ res++;}
 			if ( !p.isEmpty(x-1,y) ){ res++;}
 			
-			this.t.getPionPlacé().getProprio().ajoutPoints(res);
-			this.t.getPionPlacé().liberePion();
+			this.t.getPionPlace().getProprio().ajoutPoints(res);
+			this.t.getPionPlace().liberePion();
 		}
 	}
 	//***************FIN BLOC ABBAYE**************************
@@ -125,7 +125,7 @@ public class Evaluation {
 	
 	
 	public ArrayList<Tuile> evalConstruction(){
-		// Renvoie la liste de Tuile composant la construction(route ou ville) qui est situé sur t.getCarac(position), si la construction est terminée.
+		// Renvoie la liste de Tuile composant la construction(route ou ville) qui est situï¿½ sur t.getCarac(position), si la construction est terminï¿½e.
 		// Sinon renvoie une liste vide.
 		ArrayList<Evaluation>dejaVus = new ArrayList<Evaluation>();
 		ArrayList<Evaluation>frontiere= new ArrayList<Evaluation>();
@@ -140,9 +140,9 @@ public class Evaluation {
 			fils=frontiere.get(0).genereFils();
 			
 			if(!frontiere.isEmpty()){
-				if(fils.isEmpty()){ // Si il y a encore des Evaluation dans frontiere mais aucun fils généré, alors la construction est imcompléte
+				if(fils.isEmpty()){ // Si il y a encore des Evaluation dans frontiere mais aucun fils gï¿½nï¿½rï¿½, alors la construction est imcomplï¿½te
 					impossible=true;
-				} else { // ajoute les fils dans frontiere et dejaVus, retire le pére de frontiere
+				} else { // ajoute les fils dans frontiere et dejaVus, retire le pï¿½re de frontiere
 					frontiere.get(0).ajoutEtMaj(dejaVus,frontiere,fils);
 				}
 			} 			
@@ -151,7 +151,7 @@ public class Evaluation {
 			}
 		}
 			
-		if(!impossible){ // La boucle suivante met les Tuile des Evaluation de dejaVus dans construction, en éliminant les tuiles en double parmis les Evaluation 	
+		if(!impossible){ // La boucle suivante met les Tuile des Evaluation de dejaVus dans construction, en ï¿½liminant les tuiles en double parmis les Evaluation 	
 			for(int i=0;i<dejaVus.size();i++){ 
 				if(!construction.contains(dejaVus.get(i).t)){
 					construction.add(dejaVus.get(i).t);
@@ -164,16 +164,16 @@ public class Evaluation {
 	
 	
 	public void ajoutEtMaj (ArrayList<Evaluation>dejaVus, ArrayList<Evaluation>frontiere, ArrayList<Evaluation>fils){
-		// Ajoute dans dejaVus et frontiere les Evaluation de fils qui sont pas déja, et retire le pére de frontiere.
+		// Ajoute dans dejaVus et frontiere les Evaluation de fils qui sont pas dï¿½ja, et retire le pï¿½re de frontiere.
 		boolean trouve =false;
 		for (int i = 0; i < fils.size(); i++) { // Pour chaque Evaluation dans fils...
 			trouve=false;
 			for(int j=0; j<dejaVus.size();j++){ // et pour chaque Evaluation dans dejaVus...
-				if( fils.get(i).equals(dejaVus.get(j)) ){  // ... on vérifie si le fils est dans dejaVus
+				if( fils.get(i).equals(dejaVus.get(j)) ){  // ... on vï¿½rifie si le fils est dans dejaVus
 					trouve=true;
 				}
 			}
-			if(!trouve){ // Si il n'y était pas on l'ajoute a dejaVus et frontiere
+			if(!trouve){ // Si il n'y ï¿½tait pas on l'ajoute a dejaVus et frontiere
 				dejaVus.add(fils.get(i)); 
 				frontiere.add(fils.get(i));
 			}
@@ -188,13 +188,13 @@ public class Evaluation {
 	
 	public ArrayList<Evaluation> genereFils(){
 		// Action : Renvoie les Evaluation fils si elles existent toutes, sinon renvoie un ArrayList vide
-		boolean [][] connex = t.getConnexitéBordure();
+		boolean [][] connex = t.getConnexiteBordure();
 		int x= t.getX(); // Pour simplifier la lecture de la suite.
 		int y= t.getY();
 		boolean existe=true;
 		ArrayList<Evaluation>fils = new ArrayList<Evaluation>();
 		
-		if(position==0){ // On s'intéresse a la caractéristique au Nord de la Tuile.
+		if(position==0){ // On s'intï¿½resse a la caractï¿½ristique au Nord de la Tuile.
 			
 			if(p.isEmpty(x, y+1)){ // Si la tuile au dessus n'existe pas c'est que la construction n'est pas fini.
 				existe=false;
@@ -202,7 +202,7 @@ public class Evaluation {
 				fils.add(new Evaluation(p.getTuile(x, y+1),p,2));
 			} 
 			
-			// Il faut faire de même avec d'autres caractéristiques si elles étaient connecté a position :
+			// Il faut faire de mï¿½me avec d'autres caractï¿½ristiques si elles ï¿½taient connectï¿½ a position :
 			if(connex[0][0]){ 
 				if(p.isEmpty(x+1, y)){
 					existe=false;
@@ -225,7 +225,7 @@ public class Evaluation {
 				}
 			}
 			if(connex[3][0]){
-				// inutile pour l'évaluation des construction mais important pour repérer les pions présent sur une même construction
+				// inutile pour l'ï¿½valuation des construction mais important pour repï¿½rer les pions prï¿½sent sur une mï¿½me construction
 				fils.add(new Evaluation(p.getTuile(x, y),p,4));
 			}
 		}
@@ -358,25 +358,25 @@ public class Evaluation {
 		}
 	}
 	
-	///****Bloc concernant les Evaluation utilisé pour la gestion des pions, il s'agit parfois de fonction presque identique à celle utilisée pour les construction  
+	///****Bloc concernant les Evaluation utilisï¿½ pour la gestion des pions, il s'agit parfois de fonction presque identique ï¿½ celle utilisï¿½e pour les construction  
 	
 	
-	public ArrayList<Joueur>getMajorité(ArrayList<Joueur> player){
-	// Renvoie la liste du(ou des) joueur(s) ayant la majorité des pions sur une construction achevé. Et retire les pions.
+	public ArrayList<Joueur>getMajorite(ArrayList<Joueur> player){
+	// Renvoie la liste du(ou des) joueur(s) ayant la majoritï¿½ des pions sur une construction achevï¿½. Et retire les pions.
 		ArrayList<Evaluation> evalPosePion = this.evalPosePion();
 		ArrayList<Joueur> winner = new ArrayList<Joueur>();
 		int [] nbpion= new int [player.size()];
 		for(int i=0;i<evalPosePion.size();i++){
-			if(evalPosePion.get(i).getT().getPionPlacé()!=null){ //Si il y a un pion sur cette tuile ...
-				if(evalPosePion.get(i).t.getPionPlacé().getPositionSurTuile()==evalPosePion.get(i).getPosition()){ // Pour ne pas comptabiliser un pion qui serait sur la tuile mais pas dans la construction qui nous intéresse
-					nbpion[evalPosePion.get(i).getT().getPionPlacé().getProprio().getIdentifiant()]++; // +1 dans la case du tableau ayant le même numéro que l'id du joueur.
-					evalPosePion.get(i).getT().getPionPlacé().liberePion(); // retire le pion.
+			if(evalPosePion.get(i).getT().getPionPlace()!=null){ //Si il y a un pion sur cette tuile ...
+				if(evalPosePion.get(i).t.getPionPlace().getPositionSurTuile()==evalPosePion.get(i).getPosition()){ // Pour ne pas comptabiliser un pion qui serait sur la tuile mais pas dans la construction qui nous intï¿½resse
+					nbpion[evalPosePion.get(i).getT().getPionPlace().getProprio().getIdentifiant()]++; // +1 dans la case du tableau ayant le mï¿½me numï¿½ro que l'id du joueur.
+					evalPosePion.get(i).getT().getPionPlace().liberePion(); // retire le pion.
 				}
 			}
 		}
 		
-		int max=1; // Pour éviter que, si une construction est évalué alors qu'il n'y a pas de pion, les point soient ajouter à tous les joueurs
-		for(int i=0;i<nbpion.length;i++){ // trouve quel est le plus haut nombre de pion pour un même joueur.
+		int max=1; // Pour ï¿½viter que, si une construction est ï¿½valuï¿½ alors qu'il n'y a pas de pion, les point soient ajouter ï¿½ tous les joueurs
+		for(int i=0;i<nbpion.length;i++){ // trouve quel est le plus haut nombre de pion pour un mï¿½me joueur.
 			if(nbpion[i]>max){max=nbpion[i];}
 			i++;
 		}
@@ -393,10 +393,10 @@ public class Evaluation {
 	
 	
 	public ArrayList<Evaluation> evalPosePion(){
-		// Renvoie la liste des evaluation composant la construction(route ou ville) qui est située sur this.t.getCarac(position)
-		// Contrairement a evalConstruction, on ne s'arrête pas quand il manque un voisin à une tuile. Le boolean "impossible" et tout ce qui va avec est donc retiré.
-		// De plus on conserve position ce qui permet de vérifier la présence de pion.
-		// Les Evaluations renvoyées peuvent aussi servir en fin de jeu pour les construction imcompléte.
+		// Renvoie la liste des evaluation composant la construction(route ou ville) qui est situï¿½e sur this.t.getCarac(position)
+		// Contrairement a evalConstruction, on ne s'arrï¿½te pas quand il manque un voisin ï¿½ une tuile. Le boolean "impossible" et tout ce qui va avec est donc retirï¿½.
+		// De plus on conserve position ce qui permet de vï¿½rifier la prï¿½sence de pion.
+		// Les Evaluations renvoyï¿½es peuvent aussi servir en fin de jeu pour les construction imcomplï¿½te.
 		ArrayList<Evaluation> dejaVus = new ArrayList<Evaluation>();
 		ArrayList<Evaluation> frontiere= new ArrayList<Evaluation>();
 		boolean fini = false;
@@ -414,18 +414,18 @@ public class Evaluation {
 	
 	public ArrayList<Evaluation> genereFilsPion(){
 		// Action : Renvoie les Evaluation fils  
-		// Contrairement a genereFils, le boolean existe ne sert plus a rien puisqu'on veut connaître les Evaluation d'une construction même si elle n'est pas fini (pour savoir si il y a déjà des pions dessus).
-		boolean [][] connex = t.getConnexitéBordure();
+		// Contrairement a genereFils, le boolean existe ne sert plus a rien puisqu'on veut connaï¿½tre les Evaluation d'une construction mï¿½me si elle n'est pas fini (pour savoir si il y a dï¿½jï¿½ des pions dessus).
+		boolean [][] connex = t.getConnexiteBordure();
 		int x= t.getX(); // Pour simplifier la lecture de la suite.
 		int y= t.getY();
 		ArrayList<Evaluation>fils = new ArrayList<Evaluation>();
 		
-		if(position==12){ // On s'intéresse a la caractéristique au Nord de la Tuile. 12 et non 0 par rapport a la façon d'organiser les bonton voir la classe : VuePlateau
+		if(position==12){ // On s'intï¿½resse a la caractï¿½ristique au Nord de la Tuile. 12 et non 0 par rapport a la faï¿½on d'organiser les bonton voir la classe : VuePlateau
 			
 			if(!p.isEmpty(x, y+1)){
 			fils.add(new Evaluation(p.getTuile(x, y+1),p,6));}
 			
-			// Il faut faire de même avec d'autres caracéristiques si elles étaient connecté a position :
+			// Il faut faire de mï¿½me avec d'autres caracï¿½ristiques si elles ï¿½taient connectï¿½ a position :
 			if(connex[0][0]){ 
 				if(!p.isEmpty(x+1, y)){
 				fils.add(new Evaluation(p.getTuile(x+1, y),p,9));}
@@ -442,7 +442,7 @@ public class Evaluation {
 				else{fils.add(new Evaluation(this.t,p,9));}
 			}
 			if(connex[3][0]){
-				// inutile pour l'évaluation des construction mais important pour repérer les pions présent sur une même construction
+				// inutile pour l'ï¿½valuation des construction mais important pour repï¿½rer les pions prï¿½sent sur une mï¿½me construction
 				fils.add(new Evaluation(p.getTuile(x, y),p,0));
 			}
 			

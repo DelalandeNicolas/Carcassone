@@ -62,7 +62,7 @@ public class ModPlateau extends Observable {
 		for (int ligne = 0; ligne < hautNbTuiles; ligne++) {
 			for (int col = 0; col < largNbTuiles; col++) {
 				Tuile t = plateau.getTuile((col + this.xPosPlateau), (-(ligne + yPosPlateau)));
-				if (t != null && t.getPionPlacé()!=null) {
+				if (t != null && t.getPionPlace()!=null) {
 					tabtabPresencePion[ligne][col] = true;
 				} else {
 					tabtabPresencePion[ligne][col] = false;
@@ -77,8 +77,8 @@ public class ModPlateau extends Observable {
 		for (int ligne = 0; ligne < hautNbTuiles; ligne++) {
 			for (int col = 0; col < largNbTuiles; col++) {
 				Tuile t = plateau.getTuile((col + this.xPosPlateau), (-(ligne + yPosPlateau)));
-				if (t != null && t.getPionPlacé()!=null) {
-					tabtabPositionPion[ligne][col]=t.getPionPlacé().getPositionSurTuile();
+				if (t != null && t.getPionPlace()!=null) {
+					tabtabPositionPion[ligne][col]=t.getPionPlace().getPositionSurTuile();
 				} 
 			}
 		}
@@ -90,8 +90,8 @@ public class ModPlateau extends Observable {
 		for (int ligne = 0; ligne < hautNbTuiles; ligne++) {
 			for (int col = 0; col < largNbTuiles; col++) {
 				Tuile t = plateau.getTuile((col + this.xPosPlateau), (-(ligne + yPosPlateau)));
-				if (t != null && t.getPionPlacé()!=null) {
-						tabtabCouleurPion[ligne][col]=t.getPionPlacé().getProprio().getCouleur();
+				if (t != null && t.getPionPlace()!=null) {
+						tabtabCouleurPion[ligne][col]=t.getPionPlace().getProprio().getCouleur();
 				}
 			}
 		}
@@ -160,14 +160,14 @@ public class ModPlateau extends Observable {
 		if(!construction.isEmpty()){
 			if(tuileposee.getCarac(0)==Terrain.ROUTE){
 				evalPion=new Evaluation(tuileposee,plateau,12);
-				winner = evalPion.getMajorité(Joueur.getListJoueur());
+				winner = evalPion.getMajorite(Joueur.getListJoueur());
 				for(int i=0;i<winner.size();i++){
 					winner.get(i).ajoutPoints(evaltuileposee.valeurRoute(construction));
 				}
 			}
 			if(tuileposee.getCarac(0)==Terrain.VILLE){
 				evalPion=new Evaluation(tuileposee,plateau,12);
-				winner = evalPion.getMajorité(Joueur.getListJoueur());
+				winner = evalPion.getMajorite(Joueur.getListJoueur());
 				for(int i=0;i<winner.size();i++){
 					winner.get(i).ajoutPoints(evaltuileposee.valeurVille(construction));
 				}
@@ -179,14 +179,14 @@ public class ModPlateau extends Observable {
 		if(!construction.isEmpty()){
 			if(tuileposee.getCarac(1)==Terrain.ROUTE){
 				evalPion=new Evaluation(tuileposee,plateau,3);
-				winner = evalPion.getMajorité(Joueur.getListJoueur());
+				winner = evalPion.getMajorite(Joueur.getListJoueur());
 				for(int i=0;i<winner.size();i++){
 					winner.get(i).ajoutPoints(evaltuileposee.valeurRoute(construction));
 				}
 			}
 			if(tuileposee.getCarac(1)==Terrain.VILLE){
 				evalPion=new Evaluation(tuileposee,plateau,3);
-				winner = evalPion.getMajorité(Joueur.getListJoueur());
+				winner = evalPion.getMajorite(Joueur.getListJoueur());
 				for(int i=0;i<winner.size();i++){
 					winner.get(i).ajoutPoints(evaltuileposee.valeurVille(construction));
 				}
@@ -198,14 +198,14 @@ public class ModPlateau extends Observable {
 		if(!construction.isEmpty()){
 			if(tuileposee.getCarac(2)==Terrain.ROUTE){
 				evalPion=new Evaluation(tuileposee,plateau,6);
-				winner = evalPion.getMajorité(Joueur.getListJoueur());
+				winner = evalPion.getMajorite(Joueur.getListJoueur());
 				for(int i=0;i<winner.size();i++){
 					winner.get(i).ajoutPoints(evaltuileposee.valeurRoute(construction));
 				}
 			}
 			if(tuileposee.getCarac(2)==Terrain.VILLE){
 				evalPion=new Evaluation(tuileposee,plateau,6);
-				winner = evalPion.getMajorité(Joueur.getListJoueur());
+				winner = evalPion.getMajorite(Joueur.getListJoueur());
 				for(int i=0;i<winner.size();i++){
 					winner.get(i).ajoutPoints(evaltuileposee.valeurVille(construction));
 				}
@@ -217,14 +217,14 @@ public class ModPlateau extends Observable {
 		if(!construction.isEmpty()){
 			if(tuileposee.getCarac(3)==Terrain.ROUTE){
 				evalPion=new Evaluation(tuileposee,plateau,9);
-				winner = evalPion.getMajorité(Joueur.getListJoueur());
+				winner = evalPion.getMajorite(Joueur.getListJoueur());
 				for(int i=0;i<winner.size();i++){
 					winner.get(i).ajoutPoints(evaltuileposee.valeurRoute(construction));
 				}
 			}
 			if(tuileposee.getCarac(3)==Terrain.VILLE){
 				evalPion=new Evaluation(tuileposee,plateau,9);
-				winner = evalPion.getMajorité(Joueur.getListJoueur());
+				winner = evalPion.getMajorite(Joueur.getListJoueur());
 				for(int i=0;i<winner.size();i++){
 					winner.get(i).ajoutPoints(evaltuileposee.valeurVille(construction));
 				}
@@ -250,13 +250,13 @@ public class ModPlateau extends Observable {
 				}
 				
 				if(t.getCarac(posCarac)==Terrain.VILLE){
-					winner= eval.getMajorité(Joueur.getListJoueur());
+					winner= eval.getMajorite(Joueur.getListJoueur());
 					for(int j=0;j<winner.size();j++){
 						winner.get(j).ajoutPoints(eval.valeurVilleFinDePartie(construction));
 					}
 				}
 				if(t.getCarac(posCarac)==Terrain.ROUTE){
-					winner= eval.getMajorité(Joueur.getListJoueur());
+					winner= eval.getMajorite(Joueur.getListJoueur());
 					for(int j=0;j<winner.size();j++){
 						winner.get(j).ajoutPoints(eval.valeurRoute(construction));
 					}
